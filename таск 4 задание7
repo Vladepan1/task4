@@ -1,0 +1,70 @@
+#include<iostream>
+#include <math.h>
+using namespace std;
+double task1(int x, int n, float &last) {
+	float result = 1;
+	last = 1;
+	for (int i = 1; i < n;i++)
+	{
+		last = -1 * last*(2 * i - 1) / (2 * i);
+		result += last;
+	}
+	return result;
+}
+
+double task2(int x, float E, float &N)
+{
+	int i;
+	N = 0;
+	float last = 1;
+	double result = 0;
+	for (i = 1; fabs(last) > E; ++i)
+	{
+		last = -1 * last*(2 * i - 1) / (2 * i);
+		result += last;
+		N++;
+	}
+	return result;
+}
+int main()
+{
+	setlocale(LC_ALL, "RUS");
+	int n;
+	float last = 1;
+	int x;
+	cout << "введите значение аргумента" << endl;
+	cin >> x;
+	cout << "введите количество чисел" << endl;
+	cin >> n;
+	
+	
+
+	float otv = 1 / sqrt(1 + x);
+	float otv2 = task1(x, n, last);
+	cout << "Точное значение функции равно " << otv << endl;
+	cout << "Частичная сумма ряда равна:" << otv2 << endl;
+	cout << "погрешность" << abs(otv2 - otv) << endl;
+	cout << "последний член ряда:" << last << endl;
+	if (abs(otv2 - otv) > abs(last))
+		cout << "погрешность больше последнего слагаемого" << endl;
+	else
+		cout << "погрешность меньше последнего слагаемого" << endl;
+
+	cout << "Задание 2" << endl;
+	double E;
+	cout << "Введите значение аргумента > ";
+	cin >> x;
+	cout << "Задайте точность вычислений > ";
+	cin >> E;
+	float N = 0;
+	float func = 1 / sqrt(1 + x);
+	float sum = task2(x, E, N);
+	cout << "Точное значение функции равно " << func << endl;
+	cout << "Частичная сумма ряда c заданной точностью равна " << sum << endl;
+	cout << "Учтено " << N << " членов ряда" << endl;
+	sum = task2(x, E / 10, N);
+	cout << "Частичная сумма ряда c точностью, большей в 10 раз, равна " << sum << endl;
+	cout << "Учтено " << N << " членов ряда" << endl;
+	getchar();
+	return 0;
+}
